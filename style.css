@@ -1,0 +1,148 @@
+:root{   /* The :root selector in CSS is a pseudo-class that targets the root element of the document, which is typically the <html> element. Unlike regular selectors (e.g., html), :root is part of the pseudo-class family, so has higher specificity, and includes selectors like :hover, :focus, and :nth-child. These selectors apply styles based on specific states or roles rather than targeting elements directly */
+    --background: #101114;
+    --primary: #1C1D20;
+    --secondary: #4A4D57;
+    --accent: #00FFC4; /* accent color generally used for buttons, links, and other interactive elements like hover effects highlights */
+    --text: #F9F9F9;
+}
+*{   /* default values of settings */
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16pt;
+    color: var(--text);
+}
+body{
+    background-color: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* view port height*/
+    flex-direction: column; /* aligh items one below the other that was done side by side */
+    padding: 10px;
+}
+h1{
+    font-size: 3em; /* 3 times the size of the default font size */
+    margin-top: 100px; 
+    margin-bottom: 20px; /* space between heading and input field */
+    color: var(--accent); 
+    text-align: center; 
+    text-transform: uppercase; 
+    font-weight: 800; /* bold text */
+}
+/* wrapper for adjusting size of input field for different screen sizes of devices */
+.wrapper{
+    width: 700px;
+    max-width: 100%; /* in smaller devices */
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; /* space between child elements inside this class */
+}
+#todo-input{
+    box-sizing: border-box; /* to make sure the padding and border are included in the element's total width and height so that they stay consistent and so created inwards rather than have them stick out and mess up */
+    width: 100%; 
+    padding: 12px 20px; /* 12px top and bottom, 20px left and right */
+    border: 2px solid var(--secondary); 
+    border-radius: 1000px; /* rounded corners */
+    background: none;
+    font: inherit; /* inherit the font from the parent element we previously used*/
+    color: var(--text);
+    caret-color: var(--accent); /* color of the cursor(hover effect) when typing */  
+}
+#todo-input:focus{ 
+    outline: none; /* remove the default browser behavior and change style when we tab bar to input something */
+}
+form{
+    position: relative; 
+}
+#add-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--accent);
+    height: 100%;
+    border: none;
+    border-radius: 1000px; /* rounded corners */
+    font: inherit; 
+    color: var(--background); 
+    cursor: pointer;  
+    padding: 0 30px;
+    font-weight: 600;  
+}
+.todo{
+    margin-bottom: 10px; 
+    background: var(--primary);
+    padding: 0px 16px;
+    border-radius: 15px; /* rounded corners */
+    display: flex;
+    align-items: center; 
+} 
+.todo .todo-text{ /* determine height of the todo*/
+    padding: 15px;
+    padding-right: 0px; /* to get max clickable area, no matter where we click the checkbox will be activated. */
+    flex-grow: 1; /* to make sure the text takes up all the available space while other elements like buttons are pushed to the edges and if not used they would not be aligned properly. */
+    transition: 200ms ease; /* so that the grain out effect is smoother */ 
+} 
+.delete-button{
+    padding: 3px;
+    background: none;
+    border: none; /* as we only want the icon to be visible */
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* to show the user that this is clickable */
+} 
+.delete-button svg{
+    transition: 200ms ease;
+}
+.delete-button:hover svg{ /* when the user interacts with the button */
+    fill: #ff0033; /* This ensures that the hover effect is applied specifically to the <svg> inside the .delete-button*/
+}
+.custom-checkbox{
+    border: 2px solid var(--accent); 
+    border-radius: 50%;
+    min-height: 20px; 
+    min-width: 20px; /* so the circle is not squeezed by other elements and maintain the circular shape of the checkbox. */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* to prevent the checkbox from shrinking when the screen size changes */
+    transition: 200ms ease; 
+    cursor: pointer; 
+}
+input[type="checkbox"]:checked ~ .custom-checkbox{
+    background: var(--accent); /* Highlight the custom checkbox when checked */
+}
+input[type="checkbox"]:checked ~ .custom-checkbox svg{ /* This selector applies styles to the .custom-checkbox element when the associated checkbox (input[type="checkbox"]) is checked.
+The ~ (sibling combinator) ensures that the styles are applied to the .custom-checkbox that is a sibling of the checked checkbox. */
+    fill: var(--primary);
+}
+input[type="checkbox"]:checked ~ .todo-text{
+    text-decoration: line-through; 
+    color: var(--secondary); 
+}
+input[type="checkbox"]{
+    display: none; /* to hide the default checkbox */
+}
+@media (max-width: 500px){ 
+html{
+    font-size: 12pt;
+}
+#add-button{
+    position: unset; 
+    width: 100%; 
+    margin-top: 10px; 
+    height: auto; 
+    padding: 15px;
+}
+h1{
+    margin-top: 50px;
+    font-size: 15vw; /* 15% of the viewport width that makes it larger on larger devices and smaller on smaller ones */
+}
+}
+/* As the viewport width increases (on larger devices), the font-size also increases proportionally.
+Conversely, on smaller devices, the font-size decreases, making the text more suitable for smaller screens.
+Example:
+
+On a device with a viewport width of 1000px, the font size will be:font-size = 15vw = 15% of 1000px = 150px */
